@@ -1,3 +1,15 @@
 pt-BR:
   address_book:
     other_address: "Outros endereços"
+    shipping_addresses: "Endereço de entrega"
+    billing_addresses: "Endereço de cobrança"
+    other_address: "Novo endereço"
+    add_new_shipping_address: "Novo endereço"
+    new_shipping_address: "Novo endereço"
+    edit_shipping_address: "Editando endereço"
+    no_shipping_addresses_on_file: "Sem endereço cadastrado"
+    successfully_saved: "Endereço salvo com sucesso"
+    unsuccessfully_saved: "Um erro impediu que o endereço fosse salvo."
+    successfully_updated: "Endereço atualizado com sucesso"
+    unsuccessfully_updated: "Um erro impediu que o endereço fosse atualizado."
+    save: "Salvar"

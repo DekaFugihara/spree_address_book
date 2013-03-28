@@ -34,7 +34,8 @@
       <noscript>
         <%= address_form.text_field :state_name, :class => 'required' %>
       </noscript>
-
+	<% elsif field == "address_type" %>
+		<%= address_form.hidden_field(:address_type, :value => address.address_type) %>
   <% else %>
     <% next if field == "company" && !Spree::Config[:company] %>
     <%= address_field(address_form, field.to_sym, address_name) %>

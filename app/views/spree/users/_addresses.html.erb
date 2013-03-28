@@ -1,13 +1,14 @@
-<h3><%= t(:shipping_addresses, :scope => :address_book) %></h3>
-<% if spree_current_user.addresses.present? %>
+<h2><%= type == 'shipping' ? t(:shipping_addresses, :scope => :address_book) : t(:billing_addresses, :scope => :address_book) %></h2>
+<% addresses = spree_current_user.addresses.where(address_type: type) %>
+<% if addresses.size > 0 %>
 <table id="user_addresses">
   <tbody>
-    <% spree_current_user.addresses.each do |address| %>
+    <% addresses.each do |address| %>
     <tr class="<%= cycle('even', 'odd') %>">
       <td><%= address %></td>
       <td>
-        <%= link_to t(:edit), edit_address_path(address) %>&nbsp;
-        <%= link_to t(:remove), address_path(address), :method => :delete, :confirm => t(:are_you_sure) %>
+        <%= link_to t(:edit).parameterize, edit_address_path(address) %>&nbsp;
+        <%= link_to t(:remove).parameterize, address_path(address), :method => :delete, :confirm => t(:are_you_sure) %>
       </td>
     </tr>
     <% end %>
@@ -19,5 +20,5 @@
 </div>
 <% end %>
 <div id="new_address_link">
-  <%= link_to t(:add_new_shipping_address, :scope => :address_book), :controller => :addresses, :action => :new %>
+  <%= link_to t(:add_new_shipping_address, :scope => :address_book), new_address_path(:t => type.first) %>
 </div>

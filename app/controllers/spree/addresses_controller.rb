@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class Spree::AddressesController < Spree::StoreController
   helper Spree::AddressesHelper
   rescue_from ActiveRecord::RecordNotFound, :with => :render_404
@@ -17,6 +18,8 @@ class Spree::AddressesController < Spree::StoreController
 
   def new
     @address = Spree::Address.default
+    @address.address_type = (params[:t] == 's' ? 'shipping' : 'billing')
+    @address.state_id = Spree::State.find_by_name("São Paulo").id.to_s
   end
 
   def update

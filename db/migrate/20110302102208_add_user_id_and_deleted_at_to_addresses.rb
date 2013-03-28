@@ -3,13 +3,15 @@ class AddUserIdAndDeletedAtToAddresses < ActiveRecord::Migration
     change_table addresses_table_name do |t|
       t.integer :user_id
       t.datetime :deleted_at
+      t.string :address_type
     end
   end
 
   def self.down
     change_table addresses_table_name do |t|
       t.remove :deleted_at
-      t.remove :user_id    
+      t.remove :user_id
+      t.string :address_type
     end
   end
   
