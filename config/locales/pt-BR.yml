@@ -13,3 +13,15 @@ pt-BR:
     successfully_updated: "Endereço atualizado com sucesso"
     unsuccessfully_updated: "Um erro impediu que o endereço fosse atualizado."
     save: "Salvar"
+  activerecord:
+    attributes:
+      spree/address:
+        address1: "Endereço"
+        address2: "Complemento"
+        city: "Cidade"
+        country: "País"
+        firstname: "Nome"
+        lastname: "Sobrenome"
+        phone: "Telefone"
+        state: "Estado"
+        zipcode: "CEP"

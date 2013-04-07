@@ -10,3 +10,18 @@ div#checkout #checkout_form_address {
 }
 
 #checkout_form_address .hidden { display: none; }
+
+#checkout_form_address p[data-hook="use_billing"] {
+	float: right;
+	padding: 0px;
+	margin-top: 0px;
+	width: 100%;
+}
+
+#checkout_form_address .address_option {
+	margin-bottom: 10px;
+}
+
+#checkout_form_address .select_address p {
+	margin: 0;
+}

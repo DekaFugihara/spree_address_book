@@ -16,11 +16,10 @@
   <div class="select_address">
     <p class="field">
   <% if addresses.size > 0 %>
-
       <% addresses.each_with_index do |address, idx| %>
-      <span id="<%= [address_type, dom_id(address)].join('_') %>">
+      <div id="<%= [address_type, dom_id(address)].join('_') %>" class="address_option">
         <label><%= form.radio_button "#{address_name}_id", address.id, :checked => (idx == 0) %> <%= address %></label> <%= link_to t(:edit), edit_address_path(address) %><br />
-      </span>
+      </div>
       <% end %>
   <% end %>
 			<label><%= form.radio_button "#{address_name}_id", 0 %> <%= t('other_address', :scope => :address_book) %></label>
