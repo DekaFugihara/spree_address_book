@@ -4,6 +4,8 @@ class AddUserIdAndDeletedAtToAddresses < ActiveRecord::Migration
       t.integer :user_id
       t.datetime :deleted_at
       t.string :address_type
+      t.string :address_number
+      t.string :phone_ddd
     end
   end
 
@@ -11,7 +13,9 @@ class AddUserIdAndDeletedAtToAddresses < ActiveRecord::Migration
     change_table addresses_table_name do |t|
       t.remove :deleted_at
       t.remove :user_id
-      t.string :address_type
+      t.remove :address_type
+      t.remove :address_number
+      t.remove :phone_ddd
     end
   end
   

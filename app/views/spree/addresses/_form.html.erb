@@ -1,46 +1,56 @@
 <% address_id = address_type.chars.first %>
 <% country_id = address_type == 'billing' ? 'bcountry' : 'scountry' %>
-<% ADDRESS_FIELDS.each do |field| %>
-  <% if field == "country" %>
 
-  <p class="field" id=<%="#{address_id}country" %>>
-    <%= address_form.label :country_id, t(:country) %><span class="required">*</span><br />
-    <span id=<%="#{address_id}country-selection" %>>
-      <%= address_form.collection_select :country_id, available_countries, :id, :name, {}, {:class => 'required'} %>
-    </span>
+<div class="address-form-row clearfix">
+	<%= address_field(address_form, "firstname".to_sym, address_name) %>
+	<%= address_field(address_form, "lastname".to_sym, address_name) %>
+</div>
+<div class="address-form-row clearfix">
+	<%= address_field(address_form, "address1".to_sym, address_name) %>
+	<%= address_field(address_form, "address_number".to_sym, address_name) %>
+</div>
+<div class="address-form-row clearfix">
+	<%= address_field(address_form, "address2".to_sym, address_name) %>
+</div>
+<div class="address-form-row clearfix">
+	<%= address_field(address_form, "city".to_sym, address_name) %>
 
+  <p class="field" id=<%="#{address_id}state" %>>
+    <% have_states = !address.country.states.empty? %>
+    <%= address_form.label :state, t(:state) %><span class='req' id=<%="#{address_id}state-required"%>>*</span><br/>
+
+    <% state_elements = [
+       address_form.collection_select(:state_id, address.country.states,
+                          :id, :name,
+                          {:include_blank => true},
+                          {:class => have_states ? 'required' : 'hidden',
+                          :disabled => !have_states}) +
+       address_form.text_field(:state_name,
+                          :class => !have_states ? 'required' : 'hidden',
+                          :disabled => have_states)
+       ].join.gsub('"', "'").gsub("\n", "")
+    %>
+    <%= javascript_tag do -%>
+      $('#<%="#{address_id}state" %>').append("<%== state_elements %>");
+    <% end %>
   </p>
-  <% elsif field == "state" && Spree::Config[:address_requires_state] %>
-
-    <p class="field" id=<%="#{address_id}state" %>>
-      <% have_states = !address.country.states.empty? %>
-      <%= address_form.label :state, t(:state) %><span class='required' id=<%="#{address_id}state-required"%>>*</span><br/>
-
-      <% state_elements = [
-         address_form.collection_select(:state_id, address.country.states,
-                            :id, :name,
-                            {:include_blank => true},
-                            {:class => have_states ? 'required' : 'hidden',
-                            :disabled => !have_states}) +
-         address_form.text_field(:state_name,
-                            :class => !have_states ? 'required' : 'hidden',
-                            :disabled => have_states)
-         ].join.gsub('"', "'").gsub("\n", "")
-      %>
-      <%= javascript_tag do -%>
-        $('#<%="#{address_id}state" %>').append("<%== state_elements %>");
-      <% end %>
-    </p>
-      <noscript>
-        <%= address_form.text_field :state_name, :class => 'required' %>
-      </noscript>
-	<% elsif field == "address_type" %>
-		<%= address_form.hidden_field(:address_type, :value => address.address_type) %>
-  <% else %>
-    <% next if field == "company" && !Spree::Config[:company] %>
-    <%= address_field(address_form, field.to_sym, address_name) %>
-  <% end %>
-<% end %>
-<% if Spree::Config["alternative_#{address_name[0] == 'b' ? 'billing' : 'shipping'}_phone"] %>
-  <%= address_field(address_form, :alternative_phone, address_name) %>
-<% end %>
+	<noscript>
+  	<%= address_form.text_field :state_name, :class => 'required' %>
+	</noscript>
+</div>
+<div class="address-form-row clearfix">
+	<%= address_field(address_form, "zipcode".to_sym, address_name) %>
+</div>
+<div class="address-form-row clearfix" style="display:none;">
+	<p class="field" id=<%="#{address_id}country" %> style="display:none;">
+  	<%= address_form.label :country_id, t(:country) %><span class="required">*</span><br />
+  	<span id=<%="#{address_id}country-selection" %>>
+    <%= address_form.collection_select :country_id, available_countries, :id, :name, {}, {:class => 'required'} %>
+  	</span>
+	</p>
+</div>
+<div class="address-form-row clearfix">
+	<%= address_field(address_form, "phone_ddd".to_sym, address_name) %>
+	<%= address_field(address_form, "phone".to_sym, address_name) %>
+</div>
+<%= address_form.hidden_field(:address_type, :value => address.address_type) %>

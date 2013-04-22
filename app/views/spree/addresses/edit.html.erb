@@ -4,9 +4,9 @@
 <% end %>
 
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @address } %>
-<%= form_for @address, :html => { :id => "checkout_form_address"} do |f| %>
+<h1>Endereço de <%= @address.address_type == 'shipping' ? "entrega" : "cobrança" %></h1>
+<%= form_for @address, :html => { :id => "checkout_form_address", :class => "edit_address"} do |f| %>
 <fieldset>
-  <%= content_tag(:legend, t(:edit_shipping_address, :scope => :address_book)) %>
   <div class="inner">
     <%= render :partial => 'spree/addresses/form', :locals => {
       :address_name => 'address',
@@ -15,6 +15,6 @@
       :address => @address
     } %>
   </div>
-  <%= f.submit t(:update) %>
+	<%= f.submit t(:update) %>
 </fieldset>
 <% end %>

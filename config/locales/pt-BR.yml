@@ -17,11 +17,13 @@ pt-BR:
     attributes:
       spree/address:
         address1: "Endereço"
+        address_number: "Número"
         address2: "Complemento"
         city: "Cidade"
         country: "País"
         firstname: "Nome"
         lastname: "Sobrenome"
+        phone_ddd: "DDD"
         phone: "Telefone"
         state: "Estado"
         zipcode: "CEP"

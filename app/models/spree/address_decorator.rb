@@ -1,11 +1,13 @@
 Spree::Address.class_eval do
   belongs_to :user, :class_name => Spree.user_class.to_s
+  
+  validates :address_number, :phone_ddd, :presence => true
 
-  attr_accessible :user_id, :deleted_at, :address_type
+  attr_accessible :user_id, :deleted_at, :address_type, :address_number, :phone_ddd
 
   def self.required_fields
-    validator = Spree::Address.validators.find{|v| v.kind_of?(ActiveModel::Validations::PresenceValidator)}
-    validator ? validator.attributes : []
+    validator = Spree::Address.validators.find_all{|v| v.kind_of?(ActiveModel::Validations::PresenceValidator)}
+    validator ? validator.collect(&:attributes).flatten : []
   end
   
   # TODO: look into if this is actually needed. I don't want to override methods unless it is really needed
@@ -27,10 +29,10 @@ Spree::Address.class_eval do
   def to_s
     [
       "#{firstname} #{lastname}",
-      "#{address1}",
+      "#{address1}, #{address_number}",
       "#{address2}",
-      "#{city}, #{state || state_name} #{zipcode}",
-      "#{country}"
+      "#{city} / #{state || state_name}",
+      "CEP: #{zipcode}"
     ].reject(&:empty?).join("<br/>").html_safe
   end
 
