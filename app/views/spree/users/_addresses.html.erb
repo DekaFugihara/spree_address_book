@@ -4,7 +4,7 @@
 <table id="user_addresses">
   <tbody>
     <% addresses.each do |address| %>
-    <tr class="<%= cycle('even', 'odd') %>">
+    <tr class="<%= cycle('even', 'odd', :name => "background") %>">
       <td><%= address %></td>
       <td>
         <%= link_to t(:edit).parameterize, edit_address_path(address) %>&nbsp;
@@ -12,6 +12,7 @@
       </td>
     </tr>
     <% end %>
+		<% reset_cycle("background") %>
   </tbody>
 </table>
 <% else %>
