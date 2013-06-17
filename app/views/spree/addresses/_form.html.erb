@@ -2,8 +2,16 @@
 <% country_id = address_type == 'billing' ? 'bcountry' : 'scountry' %>
 
 <div class="address-form-row clearfix">
-	<%= address_field(address_form, "firstname".to_sym, address_name) %>
-	<%= address_field(address_form, "lastname".to_sym, address_name) %>
+	<p class="field" id="bfirstname">
+		<% firstname = spree_current_user ? spree_current_user.firstname : nil  %>
+		<label>Nome</label><span class="req">*</span><br />
+		<%= address_form.text_field(:firstname, :value => firstname, :class => 'required') %>
+	</p>
+	<p class="field" id="blastname">
+		<% lastname = spree_current_user ? spree_current_user.lastname : nil  %>
+		<label>Sobrenome</label><span class="req">*</span><br />
+		<%= address_form.text_field(:lastname, :value => lastname, :class => 'required') %>
+	</p>
 </div>
 <div class="address-form-row clearfix">
 	<%= address_field(address_form, "address1".to_sym, address_name) %>

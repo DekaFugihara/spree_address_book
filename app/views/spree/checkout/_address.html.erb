@@ -7,8 +7,8 @@
 <fieldset id="<%= address_type %>">
   <legend><%= t(address_type + "_address")%></legend>
   <% if address_type == 'shipping' && !Spree::AddressBook::Config[:disable_bill_address] %>
-    <p class="field checkbox"  data-hook="use_billing">
-      <%= check_box_tag 'order[use_billing]', '1', (!(@order.bill_address.empty? && @order.ship_address.empty?) && @order.bill_address.same_as?(@order.ship_address)) %> 
+    <p class="field checkbox" data-hook="use_billing">
+      <%= check_box_tag 'order[use_billing]', '1', (@order.ship_address.empty? || @order.bill_address.same_as?(@order.ship_address)) %>
       <%= label_tag :order_use_billing, t(:use_billing_address), :id => 'use_billing' %>
     </p>
   <% end %>
@@ -22,7 +22,7 @@
 	      </div>
       <% end %>
 	  <% end %>
-			<label><%= form.radio_button "#{address_name}_id", 0 %> <%= t('other_address', :scope => :address_book) %></label>
+		<label><%= form.radio_button "#{address_name}_id", 0 %> <%= t('other_address', :scope => :address_book) %></label>
   	</p>
 	</div>
 	<% new_address = Spree::Address.default %>
@@ -40,8 +40,7 @@
 </fieldset>
 </div>
 <% end %>
-
-<hr class="clear" />
+<br />
 <div class="form-buttons" data-hook="buttons">
   <%= submit_tag t(:save_and_continue), :class => 'continue button primary' %>
 </div>
