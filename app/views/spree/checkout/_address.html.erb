@@ -18,7 +18,7 @@
   	<% if addresses %>
       <% addresses.each_with_index do |address, idx| %>
 	      <div id="<%= [address_type, dom_id(address)].join('_') %>" class="address_option">
-	        <label><%= form.radio_button "#{address_name}_id", address.id, :checked => (idx == 0) %> <%= address %></label> <%= link_to t(:edit), edit_address_path(address) %><br />
+	        <label><%= form.radio_button "#{address_name}_id", address.id, :checked => (idx == 0) %> <%= address %></label>
 	      </div>
       <% end %>
 	  <% end %>
