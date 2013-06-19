@@ -18,6 +18,7 @@ pt-BR:
       spree/address:
         address1: "Endereço"
         address_number: "Número"
+        address_district: "Bairro"
         address2: "Complemento"
         city: "Cidade"
         country: "País"
@@ -27,3 +28,4 @@ pt-BR:
         phone: "Telefone"
         state: "Estado"
         zipcode: "CEP"
+        cpf: "CPF"

@@ -14,11 +14,19 @@
 	</p>
 </div>
 <div class="address-form-row clearfix">
+	<% if address.address_type == "billing" %>
+		<%= address_field(address_form, "cpf".to_sym, address_name) %>
+	<% else %>
+		<%= address_form.hidden_field(:cpf, :value => "") %>
+	<% end %>
+</div>
+<div class="address-form-row clearfix">
 	<%= address_field(address_form, "address1".to_sym, address_name) %>
 	<%= address_field(address_form, "address_number".to_sym, address_name) %>
 </div>
 <div class="address-form-row clearfix">
 	<%= address_field(address_form, "address2".to_sym, address_name) %>
+	<%= address_field(address_form, "address_district".to_sym, address_name) %>
 </div>
 <div class="address-form-row clearfix">
 	<%= address_field(address_form, "city".to_sym, address_name) %>

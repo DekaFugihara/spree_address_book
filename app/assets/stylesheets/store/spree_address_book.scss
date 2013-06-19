@@ -53,7 +53,11 @@ div.inner {
 #checkout_form_address #bfirstname,
 #checkout_form_address #sfirstname,
 #checkout_form_address #blastname,
-#checkout_form_address #slastname {
+#checkout_form_address #slastname,
+#checkout_form_address #baddress_district,
+#checkout_form_address #saddress_district,
+#checkout_form_address #baddress2,
+#checkout_form_address #saddress2 {
 	width: 116px;
 }
 
