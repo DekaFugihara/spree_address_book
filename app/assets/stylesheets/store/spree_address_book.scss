@@ -87,7 +87,9 @@ div.inner {
 
 #checkout_form_address #bstate,
 #checkout_form_address #sstate {
-	width: 45px;
+	width: 60px;
+	margin-right: 0px;
+	margin-left: 5px;
 }
 
 #checkout_form_address.edit_address {
@@ -106,7 +108,11 @@ div.inner {
 #checkout_form_address.edit_address #bfirstname,
 #checkout_form_address.edit_address #sfirstname,
 #checkout_form_address.edit_address #blastname,
-#checkout_form_address.edit_address #slastname {
+#checkout_form_address.edit_address #slastname,
+#checkout_form_address.edit_address #baddress2,
+#checkout_form_address.edit_address #saddress2,
+#checkout_form_address.edit_address #saddress_district,
+#checkout_form_address.edit_address #baddress_district {
 	width: 183px;
 }
 
@@ -120,10 +126,10 @@ div.inner {
 	width: 296px;
 }
 
-#checkout_form_address.edit_address #baddress2,
-#checkout_form_address.edit_address #saddress2,
 #checkout_form_address.edit_address #bzipcode,
-#checkout_form_address.edit_address #szipcode {
+#checkout_form_address.edit_address #szipcode,
+#checkout_form_address.edit_address #scpf,
+#checkout_form_address.edit_address #bcpf {
 	width: 397px;
 }
 
@@ -144,5 +150,5 @@ div.inner {
 
 #checkout_form_address.edit_address #bstate,
 #checkout_form_address.edit_address #sstate {
-	width: 45px;
+	width: 60px;
 }
