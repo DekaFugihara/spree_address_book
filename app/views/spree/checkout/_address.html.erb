@@ -12,16 +12,17 @@
       <%= label_tag :order_use_billing, t(:use_billing_address), :id => 'use_billing' %>
     </p>
   <% end %>
-	<% addresses = @addresses.size > 0 ? @addresses.where(address_type: address_type) : nil %>
+	<% addresses = @addresses.where(address_type: address_type) %>
   <div class="select_address clearfix">
     <p class="field">
-  	<% if addresses %>
+  	<% if addresses.size > 0 %>
       <% addresses.each_with_index do |address, idx| %>
 	      <div id="<%= [address_type, dom_id(address)].join('_') %>" class="address_option">
 	        <label><%= form.radio_button "#{address_name}_id", address.id, :checked => (idx == 0) %> <%= address %></label>
 	      </div>
       <% end %>
 	  <% end %>
+		<span style="display:none;" class="address-size"><%= addresses.size %></span>
 		<label><%= form.radio_button "#{address_name}_id", 0 %> <%= t('other_address', :scope => :address_book) %></label>
   	</p>
 	</div>

@@ -14,9 +14,13 @@
       $('input#order_use_billing').click(function() {
         if ($(this).is(':checked')) {
           $("#shipping .select_address").hide();
+					$("input[name='order[ship_address_id]']").attr("checked", false)
           hide_address_form('shipping');
         } else {
           $("#shipping .select_address").show();
+					if ($("#shipping .address-size").html() == "0") {
+						$("input[name='order[ship_address_id]']").attr("checked", true)
+					}
           if ($("input[name='order[ship_address_id]']:checked").val() == '0') {
             show_address_form('shipping');
           }
