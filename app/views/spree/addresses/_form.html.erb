@@ -5,12 +5,12 @@
 	<p class="field" id="bfirstname">
 		<% firstname = spree_current_user ? spree_current_user.firstname : nil  %>
 		<label>Nome</label><span class="req">*</span><br />
-		<%= address_form.text_field(:firstname, :value => firstname, :class => 'required') %>
+		<%= address_form.text_field(:firstname, :value => firstname, :class => 'required', :autocomplete => :off) %>
 	</p>
 	<p class="field" id="blastname">
 		<% lastname = spree_current_user ? spree_current_user.lastname : nil  %>
 		<label>Sobrenome</label><span class="req">*</span><br />
-		<%= address_form.text_field(:lastname, :value => lastname, :class => 'required') %>
+		<%= address_form.text_field(:lastname, :value => lastname, :class => 'required', :autocomplete => :off) %>
 	</p>
 </div>
 <div class="address-form-row clearfix">

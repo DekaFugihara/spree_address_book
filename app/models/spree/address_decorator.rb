@@ -1,9 +1,22 @@
+# coding: utf-8
 Spree::Address.class_eval do
   belongs_to :user, :class_name => Spree.user_class.to_s
   
-  validates :address_number, :address_district, :phone_ddd, :cpf, :presence => true
+  usar_como_cpf :cpf
+  validates :address_number, :address_district, :phone_ddd, :cpf, :zipcode, :presence => true
+  validate :zipcode_valid?
 
   attr_accessible :user_id, :deleted_at, :address_type, :address_number, :address_district, :phone_ddd, :cpf
+
+  def zipcode_valid?
+    begin
+      BuscaEndereco.por_cep(zipcode)
+      true
+    rescue Exception => e
+      errors[:zipcode] = "é inválido"
+      false
+    end
+  end
 
   def self.required_fields
     validator = Spree::Address.validators.find_all{|v| v.kind_of?(ActiveModel::Validations::PresenceValidator)}

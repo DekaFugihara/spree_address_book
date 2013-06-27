@@ -5,7 +5,7 @@
 
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @address } %>
 <h1>Endereço de <%= @address.address_type == 'shipping' ? "entrega" : "cobrança" %></h1>
-<%= form_for @address, :html => { :id => "checkout_form_address", :class => "edit_address"} do |f| %>
+<%= form_for @address, :html => { :id => "checkout_form_address", :class => "edit_address", :autocomplete => :off } do |f| %>
 <fieldset>
   <div class="inner">
     <%= render :partial => 'spree/addresses/form', :locals => {
