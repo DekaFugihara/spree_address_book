@@ -27,10 +27,6 @@
         }
       });
 
-			$("#order_bill_address_attributes_cpf").change(function(){
-				$("#order_ship_address_attributes_cpf").val($(this).val());
-			});
-
       $("input[name='order[bill_address_id]']:radio").change(function(){
         if ($("input[name='order[bill_address_id]']:checked").val() == '0') {
           show_address_form('billing');

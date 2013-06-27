@@ -1,7 +1,7 @@
 <% address_id = address_type.chars.first %>
 <% country_id = address_type == 'billing' ? 'bcountry' : 'scountry' %>
 
-<div class="address-form-row clearfix">
+<div class="address-form-row clearfix capslock">
 	<p class="field" id="bfirstname">
 		<% firstname = spree_current_user ? spree_current_user.firstname : nil  %>
 		<label>Nome</label><span class="req">*</span><br />
@@ -20,15 +20,15 @@
 		<%= address_form.hidden_field(:cpf, :value => "") %>
 	<% end %>
 </div>
-<div class="address-form-row clearfix">
+<div class="address-form-row clearfix capslock">
 	<%= address_field(address_form, "address1".to_sym, address_name) %>
 	<%= address_field(address_form, "address_number".to_sym, address_name) %>
 </div>
-<div class="address-form-row clearfix">
+<div class="address-form-row clearfix capslock">
 	<%= address_field(address_form, "address2".to_sym, address_name) %>
 	<%= address_field(address_form, "address_district".to_sym, address_name) %>
 </div>
-<div class="address-form-row clearfix">
+<div class="address-form-row clearfix capslock">
 	<%= address_field(address_form, "city".to_sym, address_name) %>
 
   <p class="field" id=<%="#{address_id}state" %>>

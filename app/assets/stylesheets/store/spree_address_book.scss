@@ -149,3 +149,6 @@ div#checkout #checkout_form_address {
 #checkout_form_address.edit_address #sstate {
 	width: 60px;
 }
+.capslock input {
+	text-transform: uppercase;
+}
