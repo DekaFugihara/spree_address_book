@@ -3,7 +3,14 @@ Spree::Address.class_eval do
   belongs_to :user, :class_name => Spree.user_class.to_s
   
   usar_como_cpf :cpf
-  validates :address_number, :address_district, :phone_ddd, :cpf, :zipcode, :presence => true
+  validates :address_number, :address_district, :phone_ddd, :zipcode, :presence => true
+  validates_presence_of :cpf, :unless => Proc.new { |address| address.address_type == "shipping" }
+  validates_length_of :address2, :maximum => 40
+  validates_length_of :address1, :maximum => 80
+  validates_length_of :address_district, :maximum => 60
+  validates_length_of :city, :in => 2..60
+  validates_length_of :address_number, :maximum => 20
+  validates_numericality_of :phone, :phone_ddd
   validate :zipcode_valid?
 
   attr_accessible :user_id, :deleted_at, :address_type, :address_number, :address_district, :phone_ddd, :cpf

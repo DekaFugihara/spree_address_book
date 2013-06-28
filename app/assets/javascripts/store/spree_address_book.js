@@ -43,6 +43,10 @@
         }
       });
     }
+
+		$('.capslock input').keyup(function() {
+		    this.value = this.value.toLocaleUpperCase();
+		});
   });
   
   function hide_address_form(address_type){
