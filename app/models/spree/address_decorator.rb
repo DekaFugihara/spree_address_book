@@ -10,20 +10,9 @@ Spree::Address.class_eval do
   validates_length_of :address_district, :maximum => 60
   validates_length_of :city, :in => 2..60
   validates_length_of :address_number, :maximum => 20
-  validates_numericality_of :phone, :phone_ddd
-  validate :zipcode_valid?
+  validates_numericality_of :phone, :phone_ddd, :zipcode
 
   attr_accessible :user_id, :deleted_at, :address_type, :address_number, :address_district, :phone_ddd, :cpf
-
-  def zipcode_valid?
-    begin
-      BuscaEndereco.por_cep(zipcode)
-      true
-    rescue Exception => e
-      errors[:zipcode] = "é inválido"
-      false
-    end
-  end
 
   def self.required_fields
     validator = Spree::Address.validators.find_all{|v| v.kind_of?(ActiveModel::Validations::PresenceValidator)}
