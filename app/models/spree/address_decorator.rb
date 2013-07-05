@@ -10,7 +10,7 @@ Spree::Address.class_eval do
   validates_length_of :address_district, :maximum => 60
   validates_length_of :city, :in => 2..60
   validates_length_of :address_number, :maximum => 20
-  validates_numericality_of :phone, :phone_ddd, :zipcode
+  validates_numericality_of :phone_ddd, :zipcode
 
   attr_accessible :user_id, :deleted_at, :address_type, :address_number, :address_district, :phone_ddd, :cpf
 
