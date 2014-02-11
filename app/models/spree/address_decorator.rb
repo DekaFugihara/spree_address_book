@@ -4,7 +4,7 @@ Spree::Address.class_eval do
   
   usar_como_cpf :cpf
   validates :address_number, :address_district, :phone_ddd, :zipcode, :presence => true
-  validates_presence_of :cpf, :unless => Proc.new { |address| address.address_type == "shipping" }
+  validates_presence_of :cpf, :birth_date, :unless => Proc.new { |address| address.address_type == "shipping" }
   validates_length_of :address2, :maximum => 40
   validates_length_of :address1, :maximum => 80
   validates_length_of :address_district, :maximum => 60
@@ -12,7 +12,8 @@ Spree::Address.class_eval do
   validates_length_of :address_number, :maximum => 20
   validates_numericality_of :phone_ddd, :zipcode
 
-  attr_accessible :user_id, :deleted_at, :address_type, :address_number, :address_district, :phone_ddd, :cpf
+  attr_accessible :user_id, :deleted_at, :address_type, :address_number, :address_district, 
+                  :phone_ddd, :cpf, :birth_date, :ibge_city_code, :ibge_state_code
 
   def self.required_fields
     validator = Spree::Address.validators.find_all{|v| v.kind_of?(ActiveModel::Validations::PresenceValidator)}
@@ -40,9 +41,13 @@ Spree::Address.class_eval do
       "#{firstname} #{lastname}",
       "#{address1}, #{address_number}",
       "#{address2}",
-      "#{city} / #{state || state_name}",
+      "#{city} / #{state.abbr || state_name}",
       "CEP: #{zipcode}"
     ].reject(&:empty?).join("<br/>").html_safe
+  end
+  
+  def birth_date
+    self[:birth_date].strftime("%d/%m/%Y") if self[:birth_date]
   end
 
   # UPGRADE_CHECK if future versions of spree have a custom destroy function, this will break

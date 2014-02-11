@@ -61,4 +61,34 @@ class Spree::AddressesController < Spree::StoreController
     flash[:notice] = I18n.t(:successfully_removed, :resource => t(:address))
     redirect_to(request.env['HTTP_REFERER'] || account_path) unless request.xhr?
   end
+  
+  def retrieve_address
+    @type = params[:type]
+    
+    begin
+      response = open("http://www.buscarcep.com.br/?formato=xml&chave=#{ENV['BUSCARCEP_KEY']}&cep=#{params[:zipcode]}").read
+      xml = Nokogiri::XML(response) if response
+      @resultado = xml.css("resultado").text if xml
+    rescue Exception => e
+      logger.error("#{e.class.name}: #{e.message}")
+      logger.error(e.backtrace * "\n")
+    end
+    
+    if @resultado == "1"
+      @ibge_city_code = xml.css("ibge_municipio_verificador").text
+      @ibge_state_code = xml.css("ibge_uf").text
+      @state_id = Spree::State.find_by_abbr(xml.css("uf").text).id
+      @city = xml.css("cidade").text
+      @district = xml.css("bairro").text
+      @street = "#{xml.css('tipo_logradouro').text} #{xml.css('logradouro').text}"
+    else
+      resultado_txt = xml ? xml.css("resultado_txt").text : "webservice temporariamente indisponível"
+      logger.error("BUSCARCEP RESPONSE: #{ @resultado || '-10' } --> #{resultado_txt}")
+    end
+
+    respond_to do |format|
+      format.js { render "retrieve_address" }
+    end
+  end
+  
 end

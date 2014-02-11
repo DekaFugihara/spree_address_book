@@ -7,8 +7,9 @@
     <tr class="<%= cycle('even', 'odd', :name => "background") %>">
       <td><%= address %></td>
       <td>
-        <%= link_to t(:edit).parameterize, edit_address_path(address) %>&nbsp;
-        <%= link_to t(:remove).parameterize, address_path(address), :method => :delete, :confirm => t(:are_you_sure) %>
+				<% title = address.valid? ? t(:edit).parameterize : "este endereço precisa ser atualizado" %>
+				> <%= link_to(title, edit_address_path(address)) %><br />
+        > <%= link_to t(:remove).parameterize, address_path(address), :method => :delete, :confirm => t(:are_you_sure) %>
       </td>
     </tr>
     <% end %>

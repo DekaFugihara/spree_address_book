@@ -47,6 +47,19 @@
 		$('.capslock input').keyup(function() {
 		    this.value = this.value.toLocaleUpperCase();
 		});
+		
+		$(".zipcode.fetch_address input").change(function(){
+			bill_address = $(this).attr("id").indexOf('bill_address');
+			if (bill_address == -1) {
+				type = "ship_address";
+			} else {
+				type = "bill_address";
+			}
+			fetch_address($(this).val(), type);
+			setTimeout(function() { $(".address-book-loader").remove(); }, 1000);
+    });
+		
+		
   });
   
   function hide_address_form(address_type){
@@ -60,4 +73,17 @@
     $("#" + address_type + " .inner input").prop("disabled", false);
     $("#" + address_type + " .inner select").prop("disabled", false);
   }
+
+  function fetch_address(zipcode, type){
+		$.ajax({
+			type: "POST",
+			dataType: "script",
+			url: $("#checkout_form_address").data("url"), 
+			data: { zipcode: zipcode, type: type }, 
+			beforeSend: function(jqXHR) {
+	    	$('<img src="/assets/spinner.gif" alt="loading..." class="address-book-loader">').insertAfter("#order_" + type + "_attributes_zipcode");
+	  	}
+		});
+  }
+
 })(jQuery);

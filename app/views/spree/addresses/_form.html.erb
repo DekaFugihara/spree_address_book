@@ -3,22 +3,47 @@
 
 <div class="address-form-row clearfix capslock">
 	<p class="field" id="bfirstname">
-		<% firstname = spree_current_user && spree_current_user.firstname ? spree_current_user.firstname.upcase : nil  %>
+		<% firstname = address_form.object.firstname %>
+		<% firstname = spree_current_user.firstname.upcase if firstname.nil? && spree_current_user && spree_current_user.firstname if false %>
+		<% input_class = "required" %>
+		<% if firstname.nil? && spree_current_user && spree_current_user.firstname %>
+			<% firstname = spree_current_user.firstname %>
+			<% input_class += " pre_filled" %>
+		<% end %>
 		<label>Nome</label><span class="req">*</span><br />
-		<%= address_form.text_field(:firstname, :value => firstname, :class => 'required', :autocomplete => :off) %>
+		<%= address_form.text_field(:firstname, :value => firstname, :class => input_class, :autocomplete => :off) %>
 	</p>
 	<p class="field" id="blastname">
-		<% lastname = spree_current_user && spree_current_user.lastname ? spree_current_user.lastname.upcase : nil  %>
+		<% lastname = address_form.object.lastname %>
+		<% input_class = "required" %>
+		<% if lastname.nil? && spree_current_user && spree_current_user.lastname %>
+			<% lastname = spree_current_user.lastname %>
+			<% input_class += " pre_filled" %>
+		<% end %>
 		<label>Sobrenome</label><span class="req">*</span><br />
-		<%= address_form.text_field(:lastname, :value => lastname, :class => 'required', :autocomplete => :off) %>
+		<%= address_form.text_field(:lastname, :value => lastname, :class => input_class, :autocomplete => :off) %>
 	</p>
 </div>
 <div class="address-form-row clearfix">
 	<% if address.address_type == "billing" %>
 		<%= address_field(address_form, "cpf".to_sym, address_name) %>
+		<p class="field" id="bbirth_date">
+			<% birth_date = address_form.object.birth_date %>
+			<% input_class = "required" %>
+			<% if birth_date.nil? && spree_current_user && spree_current_user.birth_date %>
+				<% birth_date = spree_current_user.birth_date %>
+				<% input_class += " pre_filled" %>
+			<% end %>
+			<label>Data de nascimento</label><span class="req">*</span><br />
+			<%= address_form.text_field(:birth_date, :value => birth_date, :class => input_class, :autocomplete => :off) %>
+		</p>
 	<% else %>
 		<%= address_form.hidden_field(:cpf, :value => "") %>
+		<%= address_form.hidden_field(:birth_date, :value => "") %>
 	<% end %>
+</div>
+<div class="address-form-row zipcode fetch_address clearfix">
+	<%= address_field(address_form, "zipcode".to_sym, address_name) %>
 </div>
 <div class="address-form-row clearfix capslock">
 	<%= address_field(address_form, "address1".to_sym, address_name) %>
@@ -28,7 +53,7 @@
 	<%= address_field(address_form, "address2".to_sym, address_name) %>
 	<%= address_field(address_form, "address_district".to_sym, address_name) %>
 </div>
-<div class="address-form-row clearfix capslock">
+<div class="address-form-row state fetch_address clearfix capslock">
 	<%= address_field(address_form, "city".to_sym, address_name) %>
 
   <p class="field" id=<%="#{address_id}state" %>>
@@ -54,9 +79,6 @@
   	<%= address_form.text_field :state_name, :class => 'required' %>
 	</noscript>
 </div>
-<div class="address-form-row clearfix">
-	<%= address_field(address_form, "zipcode".to_sym, address_name) %>
-</div>
 <div class="address-form-row clearfix" style="display:none;">
 	<p class="field" id=<%="#{address_id}country" %> style="display:none;">
   	<%= address_form.label :country_id, t(:country) %><span class="required">*</span><br />
@@ -70,3 +92,5 @@
 	<%= address_field(address_form, "phone".to_sym, address_name) %>
 </div>
 <%= address_form.hidden_field(:address_type, :value => address.address_type) %>
+<%= address_form.hidden_field(:ibge_city_code) %>
+<%= address_form.hidden_field(:ibge_state_code) %>
