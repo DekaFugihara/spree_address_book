@@ -63,15 +63,17 @@ class Spree::AddressesController < Spree::StoreController
   end
   
   def retrieve_address
-    @type = params[:type]
+    @zipcode_field = params[:zipcode_field]
     
     begin
       response = open("http://www.buscarcep.com.br/?formato=xml&chave=#{ENV['BUSCARCEP_KEY']}&cep=#{params[:zipcode]}").read
-      xml = Nokogiri::XML(response) if response
-      @resultado = xml.css("resultado").text if xml
+      xml = Nokogiri::XML(response)
+      @resultado = xml.css("resultado").text
     rescue Exception => e
       logger.error("#{e.class.name}: #{e.message}")
       logger.error(e.backtrace * "\n")
+      xml = nil
+      @resultado = "-10"
     end
     
     if @resultado == "1"
@@ -82,8 +84,8 @@ class Spree::AddressesController < Spree::StoreController
       @district = xml.css("bairro").text
       @street = "#{xml.css('tipo_logradouro').text} #{xml.css('logradouro').text}"
     else
-      resultado_txt = xml ? xml.css("resultado_txt").text : "webservice temporariamente indisponível"
-      logger.error("BUSCARCEP RESPONSE: #{ @resultado || '-10' } --> #{resultado_txt}")
+      resultado_txt = xml.nil? ? "webservice temporariamente indisponível" : xml.css("resultado_txt").text
+      logger.error("BUSCARCEP RESPONSE: #{ @resultado } (#{resultado_txt})")
     end
 
     respond_to do |format|

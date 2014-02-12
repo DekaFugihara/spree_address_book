@@ -1,12 +1,13 @@
 <% if @resultado == "1" %>
-	$("#order_<%= @type %>_attributes_city").val("<%= @city %>")
-	$("#order_<%= @type %>_attributes_address_district").val("<%= @district %>")
-	$("#order_<%= @type %>_attributes_address1").val("<%= @street %>")
-	$("#order_<%= @type %>_attributes_state_id").val("<%= @state_id %>")
-	$("#order_<%= @type %>_attributes_ibge_city_code").val("<%= @ibge_city_code %>")
-	$("#order_<%= @type %>_attributes_ibge_state_code").val("<%= @ibge_state_code %>")
+	fieldset = $("#<%= @zipcode_field %>").parents("fieldset")
+	fieldset.find(".fetch_from_zipcode.city").val("<%= @city %>")
+	fieldset.find(".fetch_from_zipcode.district").val("<%= @district %>")
+	fieldset.find(".fetch_from_zipcode.street").val("<%= @street %>")
+	fieldset.find(".fetch_from_zipcode.state").val("<%= @state_id %>")
+	fieldset.find(".fetch_from_zipcode.ibge_city_code").val("<%= @ibge_city_code %>")
+	fieldset.find(".fetch_from_zipcode.ibge_state_code").val("<%= @ibge_state_code %>")
 <% elsif @resultado == "-1" || @resultado == "-2" %>
-	$("#order_<%= @type %>_attributes_zipcode").val("")
+	$("#<%= @zipcode_field %>").val("")
 	alert("CEP informado é inválido")
 <% end %>
 $('#one-page-checkout #checkout-addresses input[type=radio]:first').trigger("change");

@@ -48,14 +48,8 @@
 		    this.value = this.value.toLocaleUpperCase();
 		});
 		
-		$(".zipcode.fetch_address input").change(function(){
-			bill_address = $(this).attr("id").indexOf('bill_address');
-			if (bill_address == -1) {
-				type = "ship_address";
-			} else {
-				type = "bill_address";
-			}
-			fetch_address($(this).val(), type);
+		$("input.fetch_address").change(function(){
+			fetch_address($(this).val(), $(this).attr("id"));
 			setTimeout(function() { $(".address-book-loader").remove(); }, 1000);
     });
 		
@@ -74,14 +68,14 @@
     $("#" + address_type + " .inner select").prop("disabled", false);
   }
 
-  function fetch_address(zipcode, type){
+  function fetch_address(zipcode, zipcode_field){
 		$.ajax({
 			type: "POST",
 			dataType: "script",
-			url: $("#checkout_form_address").data("url"), 
-			data: { zipcode: zipcode, type: type }, 
+			url: $("#fetch_address_url").data("url"), 
+			data: { zipcode: zipcode, zipcode_field: zipcode_field }, 
 			beforeSend: function(jqXHR) {
-	    	$('<img src="/assets/spinner.gif" alt="loading..." class="address-book-loader">').insertAfter("#order_" + type + "_attributes_zipcode");
+	    	$('<img src="/assets/spinner.gif" alt="loading..." class="address-book-loader">').insertAfter("#" + zipcode_field);
 	  	}
 		});
   }

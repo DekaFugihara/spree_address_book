@@ -1,6 +1,6 @@
 <% address_id = address_type.chars.first %>
 <% country_id = address_type == 'billing' ? 'bcountry' : 'scountry' %>
-
+<span id="fetch_address_url" data-url="<%= retrieve_address_from_zipcode_url %>">
 <div class="address-form-row clearfix capslock">
 	<p class="field" id="bfirstname">
 		<% firstname = address_form.object.firstname %>
@@ -42,19 +42,19 @@
 		<%= address_form.hidden_field(:birth_date, :value => "") %>
 	<% end %>
 </div>
-<div class="address-form-row zipcode fetch_address clearfix">
-	<%= address_field(address_form, "zipcode".to_sym, address_name) %>
+<div class="address-form-row zipcode clearfix">
+	<%= address_field(address_form, "zipcode".to_sym, address_name, "fetch_address") %>
 </div>
 <div class="address-form-row clearfix capslock">
-	<%= address_field(address_form, "address1".to_sym, address_name) %>
+	<%= address_field(address_form, "address1".to_sym, address_name, "fetch_from_zipcode street") %>
 	<%= address_field(address_form, "address_number".to_sym, address_name) %>
 </div>
 <div class="address-form-row clearfix capslock">
 	<%= address_field(address_form, "address2".to_sym, address_name) %>
-	<%= address_field(address_form, "address_district".to_sym, address_name) %>
+	<%= address_field(address_form, "address_district".to_sym, address_name, "fetch_from_zipcode district") %>
 </div>
-<div class="address-form-row state fetch_address clearfix capslock">
-	<%= address_field(address_form, "city".to_sym, address_name) %>
+<div class="address-form-row state clearfix capslock">
+	<%= address_field(address_form, "city".to_sym, address_name, "fetch_from_zipcode city") %>
 
   <p class="field" id=<%="#{address_id}state" %>>
     <% have_states = !address.country.states.empty? %>
@@ -64,7 +64,7 @@
        address_form.collection_select(:state_id, address.country.states,
                           :id, :name,
                           {:include_blank => true},
-                          {:class => have_states ? 'required' : 'hidden',
+                          {:class => have_states ? 'fetch_from_zipcode state required' : 'fetch_from_zipcode state hidden',
                           :disabled => !have_states}) +
        address_form.text_field(:state_name,
                           :class => !have_states ? 'required' : 'hidden',
@@ -92,5 +92,5 @@
 	<%= address_field(address_form, "phone".to_sym, address_name) %>
 </div>
 <%= address_form.hidden_field(:address_type, :value => address.address_type) %>
-<%= address_form.hidden_field(:ibge_city_code) %>
-<%= address_form.hidden_field(:ibge_state_code) %>
+<%= address_form.hidden_field(:ibge_city_code, class: "fetch_from_zipcode ibge_city_code") %>
+<%= address_form.hidden_field(:ibge_state_code, class: "fetch_code_zipcode ibge_state") %>
