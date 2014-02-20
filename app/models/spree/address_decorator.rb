@@ -4,7 +4,7 @@ Spree::Address.class_eval do
   
   usar_como_cpf :cpf
   validates :address_number, :address_district, :phone_ddd, :zipcode, :presence => true
-  validates_presence_of :cpf, :birth_date, :unless => Proc.new { |address| address.address_type == "shipping" }
+  validates_presence_of :cpf, :unless => Proc.new { |address| address.address_type == "shipping" }
   validates_length_of :address2, :maximum => 40
   validates_length_of :address1, :maximum => 80
   validates_length_of :address_district, :maximum => 60
