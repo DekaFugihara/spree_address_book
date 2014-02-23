@@ -1,6 +1,9 @@
 div.inner {
-  padding: 10px 0;
   input[type=text], select { width: 100%; }
+}
+
+#checkout_form_address input[type=submit] {
+	margin-top: 10px;
 }
 
 div#checkout #checkout_form_address {
@@ -11,6 +14,11 @@ div#checkout #checkout_form_address {
 }
 
 #checkout_form_address .hidden { display: none; }
+
+#mandatory_fields { 
+	font-size: 14px;
+	margin-top: 10px;
+}
 
 #checkout_form_address p[data-hook="use_billing"] {
 	float: right;
@@ -39,7 +47,7 @@ div#checkout #checkout_form_address {
 }
 
 #checkout_form_address p {
-	margin-right: 25px;
+	margin-right: 20px;
 	float: left;
 }
 
@@ -156,9 +164,6 @@ div#checkout #checkout_form_address {
 .capslock input {
 	text-transform: uppercase;
 }
-input.pre_filled {
-	color: red;
-}
 .address-book-loader {
-	margin-left: 10px;
+	margin-left: 5px;
 }

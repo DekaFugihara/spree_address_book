@@ -2,6 +2,7 @@
 
 (function($) {
   $(document).ready(function(){
+
     if ($(".select_address").length) {
       $('input#order_use_billing').unbind("click");
       $(".inner").hide();
@@ -18,16 +19,18 @@
           hide_address_form('shipping');
         } else {
           $("#shipping .select_address").show();
-					if ($("#shipping .address-size").html() == "0") {
-						$("input[name='order[ship_address_id]']").attr("checked", true)
+					if (parseInt($("#shipping .address-size").html()) == 0 || $("#order_ship_address_attributes_address1").val()) {
+						$("#order_ship_address_id_0").attr("checked", true)
+						show_address_form('shipping');
+					} else {
+						$("input[name='order[ship_address_id]']:first").attr("checked", true)
+						$("input[name='order[ship_address_id]']:first").trigger("change")
+						hide_address_form('shipping');
 					}
-          if ($("input[name='order[ship_address_id]']:checked").val() == '0') {
-            show_address_form('shipping');
-          }
         }
       });
 
-      $("input[name='order[bill_address_id]']:radio").change(function(){
+      $("input[name='order[bill_address_id]']:radio").click(function(){
         if ($("input[name='order[bill_address_id]']:checked").val() == '0') {
           show_address_form('billing');
         } else {
@@ -35,7 +38,7 @@
         }
       });
 
-      $("input[name='order[ship_address_id]']:radio").change(function(){
+      $("input[name='order[ship_address_id]']:radio").click(function(){
         if ($("input[name='order[ship_address_id]']:checked").val() == '0') {
           show_address_form('shipping');
         } else {
@@ -52,8 +55,7 @@
 			fetch_address($(this).val(), $(this).attr("id"));
 			setTimeout(function() { $(".address-book-loader").remove(); }, 1000);
     });
-		
-		
+
   });
   
   function hide_address_form(address_type){
@@ -66,6 +68,7 @@
     $("#" + address_type + " .inner").show();
     $("#" + address_type + " .inner input").prop("disabled", false);
     $("#" + address_type + " .inner select").prop("disabled", false);
+    $("#order_" + address_type.substring(0,4) + "_address_attributes_zipcode").trigger("change");
   }
 
   function fetch_address(zipcode, zipcode_field){

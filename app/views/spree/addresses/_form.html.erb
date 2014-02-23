@@ -94,3 +94,4 @@
 <%= address_form.hidden_field(:address_type, :value => address.address_type) %>
 <%= address_form.hidden_field(:ibge_city_code, class: "fetch_from_zipcode ibge_city_code") %>
 <%= address_form.hidden_field(:ibge_state_code, class: "fetch_code_zipcode ibge_state") %>
+<%= hidden_field_tag :lightbox, @lightbox %>

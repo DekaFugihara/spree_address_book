@@ -9,11 +9,18 @@ class Spree::AddressesController < Spree::StoreController
   end
   
   def show
-    redirect_to account_path
+    respond_to do |format|
+      format.html { render action: "show", layout: "spree/layouts/simple" }
+    end
   end
 
   def edit
     session["user_return_to"] = request.env['HTTP_REFERER']
+    @lightbox = params[:lightbox]
+    layout = @lightbox ? "spree/layouts/simple" : "spree/layouts/spree_application"
+    respond_to do |format|
+      format.html { render action: "edit", layout: layout }
+    end
   end
 
   def new
@@ -24,10 +31,11 @@ class Spree::AddressesController < Spree::StoreController
   end
 
   def update
+    destination = params[:lightbox].empty? ? account_path : address_path(@address)
     if @address.editable?
       if @address.update_attributes(params[:address])
         flash[:notice] = I18n.t(:successfully_updated, :resource => I18n.t(:address))
-        redirect_back_or_default(account_path)
+        redirect_to destination
       else
         render :action => "edit"
       end
@@ -37,7 +45,7 @@ class Spree::AddressesController < Spree::StoreController
       @address.update_attribute(:deleted_at, Time.now)
       if new_address.save
         flash[:notice] = I18n.t(:successfully_updated, :resource => I18n.t(:address))
-        redirect_back_or_default(account_path)
+        redirect_to destination, layout: template
       else
         render :action => "edit"
       end
@@ -80,9 +88,9 @@ class Spree::AddressesController < Spree::StoreController
       @ibge_city_code = xml.css("ibge_municipio_verificador").text
       @ibge_state_code = xml.css("ibge_uf").text
       @state_id = Spree::State.find_by_abbr(xml.css("uf").text).id
-      @city = xml.css("cidade").text
-      @district = xml.css("bairro").text
-      @street = "#{xml.css('tipo_logradouro').text} #{xml.css('logradouro').text}"
+      @city = xml.css("cidade").text.html_safe
+      @district = xml.css("bairro").text.html_safe
+      @street = "#{xml.css('tipo_logradouro').text} #{xml.css('logradouro').text}".html_safe
     else
       resultado_txt = xml.nil? ? "webservice temporariamente indisponível" : xml.css("resultado_txt").text
       logger.error("BUSCARCEP RESPONSE: #{ @resultado } (#{resultado_txt})")

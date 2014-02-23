@@ -1,3 +1,4 @@
+<% @body_id = "edit-address" %>
 <% content_for :head do %>
   <%= javascript_include_tag states_url(:format => :js) %>
   <%= javascript_include_tag countries_url(:format => :js) %>
@@ -16,5 +17,6 @@
     } %>
   </div>
   <%= f.submit t(:save, :scope => :address_book) %>
+  <div id="mandatory_fields">* campos obrigatórios</div>
 </fieldset>
 <% end %>
