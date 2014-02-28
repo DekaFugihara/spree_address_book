@@ -7,7 +7,7 @@
 	fieldset.find(".fetch_from_zipcode.ibge_city_code").val("<%= @ibge_city_code %>")
 	fieldset.find(".fetch_from_zipcode.ibge_state_code").val("<%= @ibge_state_code %>")
 <% elsif @resultado == "-1" || @resultado == "-2" %>
-	$("#<%= @zipcode_field %>").val("")
+	//$("#<%= @zipcode_field %>").val("")
 	alert("CEP informado é inválido")
 <% end %>
 $('#one-page-checkout #checkout-addresses input[type=radio]:first').trigger("change");
