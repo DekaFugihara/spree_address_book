@@ -31,11 +31,12 @@ class Spree::AddressesController < Spree::StoreController
   end
 
   def update
-    destination = params[:lightbox].empty? ? account_path : address_path(@address)
+    layout = params[:lightbox] ? "spree/layouts/simple" : "spree/layouts/spree_application"
+    destination = params[:lightbox] ? address_path(@address) : account_path
     if @address.editable?
       if @address.update_attributes(params[:address])
         flash[:notice] = I18n.t(:successfully_updated, :resource => I18n.t(:address))
-        redirect_to destination
+        redirect_to destination, layout: layout
       else
         render :action => "edit"
       end
@@ -45,7 +46,7 @@ class Spree::AddressesController < Spree::StoreController
       @address.update_attribute(:deleted_at, Time.now)
       if new_address.save
         flash[:notice] = I18n.t(:successfully_updated, :resource => I18n.t(:address))
-        redirect_to destination, layout: template
+        redirect_to destination, layout: layout
       else
         render :action => "edit"
       end
