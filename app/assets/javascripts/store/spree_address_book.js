@@ -2,6 +2,8 @@
 
 (function($) {
   $(document).ready(function(){
+	
+    $('#checkout_form_address').validate()
 
     if ($(".select_address").length) {
       $('input#order_use_billing').unbind("click");
