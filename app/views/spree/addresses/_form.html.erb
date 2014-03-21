@@ -46,15 +46,15 @@
 	<%= address_field(address_form, "zipcode".to_sym, address_name, "fetch_address") %>
 </div>
 <div class="address-form-row clearfix capslock">
-	<%= address_field(address_form, "address1".to_sym, address_name, "fetch_from_zipcode street") %>
-	<%= address_field(address_form, "address_number".to_sym, address_name) %>
+	<%= address_field(address_form, "address1".to_sym, address_name, "fetch_from_zipcode street", 80) %>
+	<%= address_field(address_form, "address_number".to_sym, address_name, "", 10) %>
 </div>
 <div class="address-form-row clearfix capslock">
-	<%= address_field(address_form, "address2".to_sym, address_name) %>
-	<%= address_field(address_form, "address_district".to_sym, address_name, "fetch_from_zipcode district") %>
+	<%= address_field(address_form, "address2".to_sym, address_name, "", 40) %>
+	<%= address_field(address_form, "address_district".to_sym, address_name, "fetch_from_zipcode district", 60) %>
 </div>
 <div class="address-form-row state clearfix capslock">
-	<%= address_field(address_form, "city".to_sym, address_name, "fetch_from_zipcode city") %>
+	<%= address_field(address_form, "city".to_sym, address_name, "fetch_from_zipcode city", 60) %>
 
   <p class="field" id=<%="#{address_id}state" %>>
     <% have_states = !address.country.states.empty? %>
