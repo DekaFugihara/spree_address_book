@@ -4,10 +4,9 @@
 <div class="address-form-row clearfix capslock">
 	<p class="field" id="bfirstname">
 		<% firstname = address_form.object.firstname %>
-		<% firstname = spree_current_user.firstname.upcase if firstname.nil? && spree_current_user && spree_current_user.firstname if false %>
 		<% input_class = "required" %>
 		<% if firstname.nil? && spree_current_user && spree_current_user.firstname %>
-			<% firstname = spree_current_user.firstname %>
+			<% firstname = spree_current_user.firstname.upcase %>
 			<% input_class += " pre_filled" %>
 		<% end %>
 		<label>Nome</label><span class="req">*</span><br />
@@ -17,7 +16,7 @@
 		<% lastname = address_form.object.lastname %>
 		<% input_class = "required" %>
 		<% if lastname.nil? && spree_current_user && spree_current_user.lastname %>
-			<% lastname = spree_current_user.lastname %>
+			<% lastname = spree_current_user.lastname.upcase %>
 			<% input_class += " pre_filled" %>
 		<% end %>
 		<label>Sobrenome</label><span class="req">*</span><br />
