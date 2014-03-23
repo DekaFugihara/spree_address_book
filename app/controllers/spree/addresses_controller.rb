@@ -88,7 +88,7 @@ class Spree::AddressesController < Spree::StoreController
     if @resultado == "1"
       @ibge_city_code = xml.css("ibge_municipio_verificador").text
       @ibge_state_code = xml.css("ibge_uf").text
-      @state_id = Spree::State.find_by_abbr(xml.css("uf").text).id
+      @state_id = Spree::State.where(abbr: xml.css("uf").text).where(country_id: ENV['COUNTRY_ID']).id
       @city = xml.css("cidade").text.html_safe
       @district = xml.css("bairro").text.html_safe
       @street = "#{xml.css('tipo_logradouro').text} #{xml.css('logradouro').text}".html_safe
