@@ -25,7 +25,7 @@
 </div>
 <div class="address-form-row clearfix">
 	<% if address.address_type == "billing" %>
-		<%= address_field(address_form, "cpf".to_sym, address_name) %>
+		<%= address_field(address_form, "cpf".to_sym, address_name, "cpf") %>
 		<p class="field" id="bbirth_date">
 			<% birth_date = address_form.object.birth_date %>
 			<% input_class = "required" %>
