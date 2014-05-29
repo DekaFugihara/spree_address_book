@@ -57,6 +57,12 @@
 			fetch_address($(this).val(), $(this).attr("id"));
 			setTimeout(function() { $(".address-book-loader").remove(); }, 1000);
     });
+		
+		$("input.address_number").keyup(function(e) {
+		  if (/\W/g.test(this.value)) {
+		    this.value = this.value.replace(/\W/g, "");
+		  }
+		});
 
   });
   
