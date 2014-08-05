@@ -41,7 +41,7 @@ Spree::Address.class_eval do
       "#{firstname} #{lastname}",
       "#{address1}, #{address_number}",
       "#{address2}",
-      "#{city} / #{state.abbr || state_name}",
+      "#{city} / #{state ? state.abbr : state_name}",
       "CEP: #{zipcode}"
     ].reject(&:empty?).join("<br/>").html_safe
   end
