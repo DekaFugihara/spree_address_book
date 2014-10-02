@@ -70,9 +70,9 @@
                           :disabled => have_states)
        ].join.gsub('"', "'").gsub("\n", "")
     %>
-    <%= javascript_tag do -%>
+    <script type="text/delayscript">
       $('#<%="#{address_id}state" %>').append("<%== state_elements %>");
-    <% end %>
+    </script>
   </p>
 	<noscript>
   	<%= address_form.text_field :state_name, :class => 'required' %>
