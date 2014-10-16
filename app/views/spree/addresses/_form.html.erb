@@ -2,7 +2,7 @@
 <% country_id = address_type == 'billing' ? 'bcountry' : 'scountry' %>
 <span id="fetch_address_url" data-url="<%= retrieve_address_from_zipcode_url %>">
 <div class="address-form-row clearfix capslock">
-	<p class="field" id="bfirstname">
+	<div class="field">
 		<% firstname = address_form.object.firstname %>
 		<% input_class = "required" %>
 		<% if firstname.nil? && spree_current_user && spree_current_user.firstname %>
@@ -11,8 +11,8 @@
 		<% end %>
 		<label>Nome</label><span class="req">*</span><br />
 		<%= address_form.text_field(:firstname, :value => firstname, :class => input_class, :autocomplete => :off) %>
-	</p>
-	<p class="field" id="blastname">
+	</div>
+	<div class="field">
 		<% lastname = address_form.object.lastname %>
 		<% input_class = "required" %>
 		<% if lastname.nil? && spree_current_user && spree_current_user.lastname %>
@@ -21,41 +21,48 @@
 		<% end %>
 		<label>Sobrenome</label><span class="req">*</span><br />
 		<%= address_form.text_field(:lastname, :value => lastname, :class => input_class, :autocomplete => :off) %>
-	</p>
+	</div>
 </div>
+
 <div class="address-form-row clearfix">
 	<% if address.address_type == "billing" %>
 		<%= address_field(address_form, "cpf".to_sym, address_name, "cpf") %>
-		<p class="field" id="bbirth_date">
+		<div class="field">
 			<% birth_date = address_form.object.birth_date %>
 			<% input_class = "required" %>
 			<% if birth_date.nil? && spree_current_user && spree_current_user.birth_date %>
 				<% birth_date = spree_current_user.birth_date %>
 				<% input_class += " pre_filled" %>
 			<% end %>
-			<label>Data de nascimento</label><span class="req">*</span><br />
+		</div>
+		<div class="field">
+			<label>Nasc. (dd/mm/aaaa)</label><span class="req">*</span><br />
 			<%= address_form.text_field(:birth_date, :value => birth_date, :class => input_class, :autocomplete => :off) %>
-		</p>
+		</div>
 	<% else %>
 		<%= address_form.hidden_field(:cpf, :value => "") %>
 		<%= address_form.hidden_field(:birth_date, :value => "") %>
 	<% end %>
 </div>
+
 <div class="address-form-row zipcode clearfix">
-	<%= address_field(address_form, "zipcode".to_sym, address_name, "fetch_address") %>
+	<%= address_field(address_form, "zipcode".to_sym, address_name, "fetch_address full") %>
 </div>
+
 <div class="address-form-row clearfix capslock">
-	<%= address_field(address_form, "address1".to_sym, address_name, "fetch_from_zipcode street", 80) %>
-	<%= address_field(address_form, "address_number".to_sym, address_name, "address_number", 20) %>
+	<%= address_field(address_form, "address1".to_sym, address_name, "fetch_from_zipcode street long", 80) %>
+	<%= address_field(address_form, "address_number".to_sym, address_name, "address_number short", 20) %>
 </div>
+
 <div class="address-form-row clearfix capslock">
 	<%= address_field(address_form, "address2".to_sym, address_name, "", 40) %>
 	<%= address_field(address_form, "address_district".to_sym, address_name, "fetch_from_zipcode district", 60) %>
 </div>
-<div class="address-form-row state clearfix capslock">
-	<%= address_field(address_form, "city".to_sym, address_name, "fetch_from_zipcode city", 60) %>
 
-  <p class="field" id=<%="#{address_id}state" %>>
+<div class="address-form-row state clearfix capslock">
+	<%= address_field(address_form, "city".to_sym, address_name, "fetch_from_zipcode city long", 60) %>
+
+  <div class="field" id=<%="#{address_id}state" %>>
     <% have_states = !address.country.states.empty? %>
     <%= address_form.label :state, t(:state) %><span class='req' id=<%="#{address_id}state-required"%>>*</span><br/>
 
@@ -73,11 +80,12 @@
     <script type="text/delayscript">
       $('#<%="#{address_id}state" %>').append("<%== state_elements %>");
     </script>
-  </p>
+	</div>
 	<noscript>
   	<%= address_form.text_field :state_name, :class => 'required' %>
 	</noscript>
 </div>
+
 <div class="address-form-row clearfix" style="display:none;">
 	<p class="field" id=<%="#{address_id}country" %> style="display:none;">
   	<%= address_form.label :country_id, t(:country) %><span class="required">*</span><br />
@@ -86,10 +94,12 @@
   	</span>
 	</p>
 </div>
+
 <div class="address-form-row clearfix">
-	<%= address_field(address_form, "phone_ddd".to_sym, address_name) %>
-	<%= address_field(address_form, "phone".to_sym, address_name) %>
+	<%= address_field(address_form, "phone_ddd".to_sym, address_name, "short", 2) %>
+	<%= address_field(address_form, "phone".to_sym, address_name, "long", 10) %>
 </div>
+
 <%= address_form.hidden_field(:address_type, :value => address.address_type) %>
 <%= address_form.hidden_field(:ibge_city_code, class: "fetch_from_zipcode ibge_city_code") %>
 <%= address_form.hidden_field(:ibge_state_code, class: "fetch_code_zipcode ibge_state") %>
