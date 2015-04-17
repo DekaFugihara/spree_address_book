@@ -1,5 +1,6 @@
 # encoding: UTF-8
 class Spree::AddressesController < Spree::StoreController
+  ssl_allowed :retrieve_address
   helper Spree::AddressesHelper
   rescue_from ActiveRecord::RecordNotFound, :with => :render_404
   load_and_authorize_resource :class => Spree::Address
