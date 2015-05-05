@@ -37,7 +37,7 @@
 		</div>
 		<div class="field">
 			<label>Nasc. (dd/mm/aaaa)</label><span class="req">*</span><br />
-			<%= address_form.text_field(:birth_date, :value => birth_date, :class => input_class, :autocomplete => :off) %>
+			<%= address_form.text_field(:birth_date, :value => birth_date, :class => input_class, :autocomplete => :off, :minlength => "10") %>
 		</div>
 	<% else %>
 		<%= address_form.hidden_field(:cpf, :value => "") %>
