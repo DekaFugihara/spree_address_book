@@ -8,12 +8,6 @@ class Spree::AddressesController < Spree::StoreController
   def index
     redirect_to account_path
   end
-  
-  def show
-    respond_to do |format|
-      format.html { render action: "show", layout: "spree/layouts/simple" }
-    end
-  end
 
   def edit
     session["user_return_to"] = request.env['HTTP_REFERER']
