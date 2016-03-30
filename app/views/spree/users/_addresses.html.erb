@@ -9,7 +9,7 @@
       <td class="actions">
 				<% title = address.valid? ? t(:edit).parameterize : "este endereço precisa ser atualizado" %>
 				> <%= link_to(title, edit_address_path(address)) %><br />
-        > <%= link_to t(:remove).parameterize, address_path(address), :method => :delete, :confirm => t(:are_you_sure) %>
+        > <%= link_to t(:remove).parameterize, delete_address_path(address), :confirm => t(:are_you_sure) %>
       </td>
     </tr>
     <% end %>
